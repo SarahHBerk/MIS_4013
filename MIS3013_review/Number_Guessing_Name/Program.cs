@@ -3,11 +3,30 @@
 {
     Console.WriteLine("Please input the lower bound value: ");
     string answer = Console.ReadLine();
-    int lowerBound = int.Parse(answer);
+    int lowerBound = 0;
+
+    lowerBound = ValidateInput(answer);
+
+    //try
+    //{
+    //    lowerBound = int.Parse(answer);                    //control + k + c to comment out
+    //}
+    //catch (FormatException ex)
+    //{
+    //    Console.WriteLine("Please enter a number, not a string.");
+    //}
+    //catch (OverflowException ex)
+    //{
+    //    Console.WriteLine("The number you entered is too large or too small. Please enter a valid integer.");
+    //}
+    //catch (Exception ex)
+    //{
+    //    Console.WriteLine("I don't know what went wrong ");
+    //}
 
     Console.WriteLine("Please input the upper bound value: ");
     answer = Console.ReadLine();
-    int upperBound = int.Parse(answer);
+    int upperBound = ValidateInput(answer, "Invalid input for uper bound, please try again.");
 
     // data type variable_name = value
     Random r = new Random();
@@ -22,7 +41,7 @@
     {
         Console.WriteLine($"Guess a number between {lowerBound} and {upperBound}: ");
         string userGuess = Console.ReadLine();
-        guess = Convert.ToInt32(userGuess); // converts userGuess from string to int
+        guess = ValidateInput(userGuess, "Invalid input for guess, please try again"); // converts userGuess from string to int
                                             // or int guess = int.Parse(userGuess);
         count++; // increments count by 1 each time the loop runs, could say count = count + 1 or count += 1
 
@@ -70,3 +89,14 @@
 }
 
 
+static int ValidateInput(string answer, string msg = "Invalid input for lower bound, please try again") // control + a + a to rename stuff
+{
+    int result;
+    while (int.TryParse(answer, out result) == false)
+    {
+        Console.WriteLine(msg);
+        answer = Console.ReadLine();
+    }
+
+    return result;
+}
